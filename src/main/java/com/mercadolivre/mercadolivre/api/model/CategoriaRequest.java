@@ -1,6 +1,7 @@
 package com.mercadolivre.mercadolivre.api.model;
 
 import com.mercadolivre.mercadolivre.Validator.EntradaUnica;
+import com.mercadolivre.mercadolivre.Validator.IdValido;
 import com.mercadolivre.mercadolivre.model.Categoria;
 import org.springframework.util.Assert;
 
@@ -16,6 +17,7 @@ public class CategoriaRequest {
     private String nome;
 
     @Positive
+    @IdValido(domainClass = Categoria.class, fieldName = "id")
     private Long categoriaMaeId;
 
     //+1 CDD Categoria
@@ -23,7 +25,6 @@ public class CategoriaRequest {
         Categoria categoria = new Categoria(nome);
         if (categoriaMaeId != null){
             Categoria categoriaMae = manager.find(Categoria.class, categoriaMaeId);
-            Assert.notNull(categoriaMae, "Id da categoria mãe deve existir.");
             categoria.setMae(categoriaMae);
         }
         return new Categoria(nome);
