@@ -1,15 +1,14 @@
 package com.mercadolivre.mercadolivre.api.controller;
 
+import com.mercadolivre.mercadolivre.Validator.ValidarCaracteristicasIguais;
 import com.mercadolivre.mercadolivre.api.model.ProdutoRequest;
 import com.mercadolivre.mercadolivre.model.Produto;
 import com.mercadolivre.mercadolivre.model.Usuario;
 import com.mercadolivre.mercadolivre.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -26,6 +25,13 @@ public class ProdutoController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    public ValidarCaracteristicasIguais validarCaracteristicasIguais;
+
+    @InitBinder
+    public void init(WebDataBinder binder) { binder.addValidators(validarCaracteristicasIguais);
+    }
 
     @PostMapping
     @Transactional

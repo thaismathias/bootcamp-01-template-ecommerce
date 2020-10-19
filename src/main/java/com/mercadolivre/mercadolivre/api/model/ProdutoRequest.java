@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class ProdutoRequest {
@@ -56,5 +57,14 @@ public class ProdutoRequest {
 
     public List<ListaCaracteristicasRequest> getCaracteristicas() {
         return caracteristicas;
+    }
+
+    public boolean caracteristicasIguais() {
+        HashSet<String> nomesIguais = new HashSet<>();
+        for (ListaCaracteristicasRequest caracteristica : caracteristicas) {
+            if(!nomesIguais.add(caracteristica.getNome()))
+                return true;
+        }
+        return false;
     }
 }
