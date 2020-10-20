@@ -7,10 +7,13 @@ import com.mercadolivre.mercadolivre.api.model.Uploader;
 import com.mercadolivre.mercadolivre.model.Produto;
 import com.mercadolivre.mercadolivre.model.Usuario;
 import com.mercadolivre.mercadolivre.repository.UsuarioRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -53,10 +56,16 @@ public class ProdutoController {
     @PostMapping("/{produtoId}/imagens")
     @Transactional
     public void addImagem(@PathVariable Long produtoId, @Valid ImagemRequest request) {
+        //Usuário logado
+        Usuario dona = usuarioRepository.findByEmail("tha@zup.com").get();
+        Produto produto = manager.find(Produto.class, produtoId);
+        //Cadastro de foto é feita apenas pelo dono do produto
+        if (!produto.pertenceAoUsuario(dona)){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
         //pegar lista de links
         Set<String> links = uploader.envia(request.getImagens());
         //vincular ao produto
-        Produto produto = manager.find(Produto.class, produtoId);
         produto.associaImagens(links);
         //Atualizar inf do produto
         manager.merge(produto);

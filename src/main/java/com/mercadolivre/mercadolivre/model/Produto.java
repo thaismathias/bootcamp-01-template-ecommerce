@@ -82,4 +82,8 @@ public class Produto {
         //Associar com as imagens do produto
         this.imagens.addAll(imagens);
     }
+
+    public boolean pertenceAoUsuario(Usuario possivelDona) {
+        return this.dona.equals(possivelDona);
+    }
 }
