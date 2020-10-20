@@ -1,7 +1,9 @@
 package com.mercadolivre.mercadolivre.api.controller;
 
 import com.mercadolivre.mercadolivre.Validator.ValidarCaracteristicasIguais;
+import com.mercadolivre.mercadolivre.api.model.ImagemRequest;
 import com.mercadolivre.mercadolivre.api.model.ProdutoRequest;
+import com.mercadolivre.mercadolivre.api.model.Uploader;
 import com.mercadolivre.mercadolivre.model.Produto;
 import com.mercadolivre.mercadolivre.model.Usuario;
 import com.mercadolivre.mercadolivre.repository.UsuarioRepository;
@@ -14,10 +16,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/produtos")
-//Usuário logado
 public class ProdutoController {
 
     @PersistenceContext
@@ -29,13 +31,17 @@ public class ProdutoController {
     @Autowired
     public ValidarCaracteristicasIguais validarCaracteristicasIguais;
 
-    @InitBinder
-    public void init(WebDataBinder binder) { binder.addValidators(validarCaracteristicasIguais);
-    }
+    @Autowired
+    public Uploader uploader;
+
+
+    @InitBinder(value = "produtoRequest")
+    public void init(WebDataBinder binder) { binder.addValidators(validarCaracteristicasIguais); }
 
     @PostMapping
     @Transactional
     public ResponseEntity<Void> criaProduto(@RequestBody @Valid ProdutoRequest request) {
+        //Usuário logado
         Usuario dona = usuarioRepository.findByEmail("tha@zup.com").get();
 
         //+1 CDD Produto
@@ -44,5 +50,16 @@ public class ProdutoController {
         return ResponseEntity.ok().build();
     }
 
-
+    @PostMapping("/{produtoId}/imagens")
+    @Transactional
+    public void addImagem(@PathVariable Long produtoId, @Valid ImagemRequest request) {
+        //pegar lista de links
+        Set<String> links = uploader.envia(request.getImagens());
+        //vincular ao produto
+        Produto produto = manager.find(Produto.class, produtoId);
+        produto.associaImagens(links);
+        //Atualizar inf do produto
+        manager.merge(produto);
+        //return ResponseEntity.ok().build();
+    }
 }

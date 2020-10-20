@@ -1,6 +1,7 @@
 package com.mercadolivre.mercadolivre.model;
 
 import com.mercadolivre.mercadolivre.api.model.CaracteristicaProduto;
+import com.mercadolivre.mercadolivre.api.model.ImagemProduto;
 import com.mercadolivre.mercadolivre.api.model.ListaCaracteristicasRequest;
 
 import javax.persistence.*;
@@ -8,10 +9,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -53,6 +51,9 @@ public class Produto {
 
     private LocalDateTime dataCadastro = LocalDateTime.now();
 
+    @ElementCollection
+    private Set<ImagemProduto> imagens = new HashSet<>();
+
     @Deprecated
     public Produto(){
 
@@ -72,5 +73,13 @@ public class Produto {
         this.descricao = descricao;
         this.categoria = categoria;
         this.dona = dona;
+    }
+
+    public void associaImagens(Set<String> links) {
+        Set<ImagemProduto> imagens = links.stream()
+                .map(link -> new ImagemProduto(link))
+                .collect(Collectors.toSet());
+        //Associar com as imagens do produto
+        this.imagens.addAll(imagens);
     }
 }
