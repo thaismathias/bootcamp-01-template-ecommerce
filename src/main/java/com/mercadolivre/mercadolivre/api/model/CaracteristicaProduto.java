@@ -21,4 +21,12 @@ public class CaracteristicaProduto {
         this.nome = nome;
         this.valor = valor;
     }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getValor() {
+        return valor;
+    }
 }

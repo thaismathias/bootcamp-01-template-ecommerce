@@ -31,4 +31,12 @@ public class Categoria {
     public void setMae(Categoria categoriaMae) {
         this.categoriaMae = categoriaMae;
     }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public Categoria getCategoriaMae() {
+        return categoriaMae;
+    }
 }

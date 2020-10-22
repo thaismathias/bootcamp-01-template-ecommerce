@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -92,14 +93,6 @@ public class Produto {
         return this.dona.equals(possivelDona);
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
     public void associaOpiniao(Opiniao opiniao) {
         this.opiniao.add(opiniao);
     }
@@ -108,7 +101,54 @@ public class Produto {
         this.pergunta.add(pergunta);
     }
 
-    public Set<Pergunta> getPerguntas() {
+    public int getTotalDeNotas() {
+        return opiniao.size();
+    }
+
+    public BigDecimal getMediaDeNotas(){
+        BigDecimal somaNotas = new BigDecimal(opiniao.stream().mapToDouble(Opiniao::getNota).sum());
+        BigDecimal numeroNotas = new BigDecimal(getTotalDeNotas());
+        return somaNotas.divide(numeroNotas).setScale(1, RoundingMode.UP);
+    }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public Set<CaracteristicaProduto> getCaracteristicas() {
+        return caracteristicas;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public Set<ImagemProduto> getImagens() {
+        return imagens;
+    }
+
+    public Set<Opiniao> getOpiniao() {
+        return opiniao;
+    }
+
+    public Set<Pergunta> getPergunta() {
         return pergunta;
     }
 }

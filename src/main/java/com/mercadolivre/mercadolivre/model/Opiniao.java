@@ -36,4 +36,16 @@ public class Opiniao {
         this.descricao = descricao;
         this.dona = dona;
     }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public int getNota() {
+        return nota;
+    }
 }
