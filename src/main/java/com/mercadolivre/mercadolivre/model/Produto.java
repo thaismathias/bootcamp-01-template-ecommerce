@@ -56,6 +56,9 @@ public class Produto {
     @ElementCollection
     private Set<Opiniao> opiniao;
 
+    @ElementCollection
+    private Set<Pergunta> pergunta;
+
     @Deprecated
     public Produto(){
 
@@ -99,5 +102,13 @@ public class Produto {
 
     public void associaOpiniao(Opiniao opiniao) {
         this.opiniao.add(opiniao);
+    }
+
+    public void associaPergunta(Pergunta pergunta) {
+        this.pergunta.add(pergunta);
+    }
+
+    public Set<Pergunta> getPerguntas() {
+        return pergunta;
     }
 }

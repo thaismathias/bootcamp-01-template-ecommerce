@@ -6,22 +6,13 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
-@Entity
+@Embeddable
 public class Pergunta {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @NotBlank
     private String titulo;
 
     private LocalDateTime dataCriacao = LocalDateTime.now();
-
-    @NotNull
-    @Valid
-    @ManyToOne
-    private Produto produto;
 
     @NotNull
     @Valid
@@ -33,10 +24,8 @@ public class Pergunta {
 
     }
 
-    public Pergunta(@NotBlank String titulo, @NotNull @Valid Produto produto,
-                    @NotNull @Valid Usuario dona) {
+    public Pergunta(@NotBlank String titulo, @NotNull @Valid Usuario dona) {
         this.titulo = titulo;
-        this.produto = produto;
         this.dona = dona;
     }
 
@@ -48,7 +37,4 @@ public class Pergunta {
         return dona;
     }
 
-    public Produto getProduto() {
-        return produto;
-    }
 }

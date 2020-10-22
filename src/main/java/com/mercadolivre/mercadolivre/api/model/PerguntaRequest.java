@@ -17,7 +17,7 @@ public class PerguntaRequest {
     }
 
     public Pergunta toModel(EntityManager manager, Produto produto, Usuario dona) {
-        return new Pergunta(titulo, produto, dona);
+        return new Pergunta(titulo, dona);
     }
 }
 
