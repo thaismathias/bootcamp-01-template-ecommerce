@@ -2,6 +2,7 @@ package com.mercadolivre.mercadolivre.api.controller;
 
 import com.mercadolivre.mercadolivre.Validator.IdValido;
 import com.mercadolivre.mercadolivre.api.model.PerguntaRequest;
+import com.mercadolivre.mercadolivre.email.EmailService;
 import com.mercadolivre.mercadolivre.model.Pergunta;
 import com.mercadolivre.mercadolivre.model.Produto;
 import com.mercadolivre.mercadolivre.model.Usuario;
@@ -32,6 +33,9 @@ public class PerguntaController {
     @Autowired
     public EntityManager manager;
 
+    @Autowired
+    EmailService emailService;
+
     @PostMapping
     @Transactional
     public ResponseEntity <List<Pergunta>> criarPergunta(@RequestBody @Valid PerguntaRequest request,
@@ -42,9 +46,7 @@ public class PerguntaController {
         Produto produto = manager.find(Produto.class, produtoId);
         Pergunta pergunta = request.toModel(manager,produto,dona);
         manager.persist(pergunta);
-
-        //email Service para enviar email com um system out println("pergunta + link detalhes do produto")
-        //System.out.println(produto.Email());
+        emailService.enviarEmailPergunta(pergunta);//Simula envio de email
 
         return ResponseEntity.ok(perguntaRepository.findByProdutoId(produtoId));
     }
