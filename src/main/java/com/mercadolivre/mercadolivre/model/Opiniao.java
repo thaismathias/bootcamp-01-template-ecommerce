@@ -13,7 +13,7 @@ public class Opiniao {
 
     @NotNull
     @Min(1)
-    @Max(6)
+    @Max(5)
     private int nota;
 
     @NotBlank
@@ -38,7 +38,7 @@ public class Opiniao {
 
     }
 
-    public Opiniao(@NotNull @Min(1) @Max(6) int nota, @NotBlank String titulo,
+    public Opiniao(@NotNull @Min(1) @Max(5) int nota, @NotBlank String titulo,
                    @NotBlank @Size(max = 500) String descricao,
                    @NotNull @Valid Produto produto, @NotNull @Valid Usuario dona) {
         this.nota = nota;
