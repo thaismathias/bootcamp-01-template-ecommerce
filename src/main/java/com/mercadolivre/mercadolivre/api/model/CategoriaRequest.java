@@ -27,7 +27,7 @@ public class CategoriaRequest {
             if (categoriaMae == null) { throw new Exception("Id não existe."); }
             categoria.setMae(categoriaMae);
         }
-        return new Categoria(nome);
+        return categoria;
     }
 
     public void setNome(String nome) {
