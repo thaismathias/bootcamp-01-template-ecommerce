@@ -1,12 +1,9 @@
-package com.mercadolivre.mercadolivre.api.model;
+package com.mercadolivre.mercadolivre.model;
 
-import com.mercadolivre.mercadolivre.model.Produto;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Embeddable
