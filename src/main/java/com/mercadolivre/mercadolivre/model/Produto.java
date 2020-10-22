@@ -86,4 +86,12 @@ public class Produto {
     public boolean pertenceAoUsuario(Usuario possivelDona) {
         return this.dona.equals(possivelDona);
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
 }

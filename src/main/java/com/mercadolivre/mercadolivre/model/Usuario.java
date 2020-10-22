@@ -44,4 +44,8 @@ public class Usuario {
         this.email = email;
         this.senha = senhaLimpa.hash();
     }
+
+    public String getEmail() {
+        return email;
+    }
 }

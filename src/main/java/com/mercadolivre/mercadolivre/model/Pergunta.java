@@ -43,4 +43,12 @@ public class Pergunta {
     public String getTitulo() {
         return titulo;
     }
+
+    public Usuario getDona() {
+        return dona;
+    }
+
+    public Produto getProduto() {
+        return produto;
+    }
 }
