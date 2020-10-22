@@ -1,5 +1,6 @@
 package com.mercadolivre.mercadolivre.api.controller;
 
+import com.mercadolivre.mercadolivre.Validator.IdValido;
 import com.mercadolivre.mercadolivre.Validator.ValidarCaracteristicasIguais;
 import com.mercadolivre.mercadolivre.api.model.ImagemRequest;
 import com.mercadolivre.mercadolivre.api.model.ProdutoRequest;
@@ -11,6 +12,7 @@ import com.mercadolivre.mercadolivre.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -21,6 +23,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.Set;
 
+@Validated
 @RestController
 @RequestMapping("/produtos")
 public class ProdutoController {
@@ -55,9 +58,11 @@ public class ProdutoController {
 
     @PostMapping("/{produtoId}/imagens")
     @Transactional
-    public void addImagem(@PathVariable Long produtoId, @Valid ImagemRequest request) {
+    public ResponseEntity<Void> addImagem(@PathVariable @IdValido(domainClass = Produto.class, fieldName = "id") Long produtoId,
+                          @Valid ImagemRequest request) {
         //Usuário logado
         Usuario dona = usuarioRepository.findByEmail("tha@zup.com").get();
+
         Produto produto = manager.find(Produto.class, produtoId);
         //Cadastro de foto é feita apenas pelo dono do produto
         if (!produto.pertenceAoUsuario(dona)){
@@ -69,6 +74,6 @@ public class ProdutoController {
         produto.associaImagens(links);
         //Atualizar inf do produto
         manager.merge(produto);
-        //return ResponseEntity.ok().build();
+        return ResponseEntity.ok().build();
     }
 }

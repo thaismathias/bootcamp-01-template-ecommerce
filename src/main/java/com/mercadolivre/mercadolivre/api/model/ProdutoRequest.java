@@ -1,5 +1,6 @@
 package com.mercadolivre.mercadolivre.api.model;
 
+import com.mercadolivre.mercadolivre.Validator.IdValido;
 import com.mercadolivre.mercadolivre.model.Categoria;
 import com.mercadolivre.mercadolivre.model.Produto;
 import com.mercadolivre.mercadolivre.model.Usuario;
@@ -34,7 +35,7 @@ public class ProdutoRequest {
     private String descricao;
 
     @NotNull
-    //Id é valido?
+    @IdValido(domainClass = Categoria.class, fieldName = "id")
     private Long categoriaId;
 
     public ProdutoRequest(@NotBlank String nome, @NotNull @DecimalMin(value = "0.01") BigDecimal valor,
