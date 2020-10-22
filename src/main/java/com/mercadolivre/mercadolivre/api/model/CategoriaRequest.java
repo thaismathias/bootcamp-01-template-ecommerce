@@ -17,14 +17,14 @@ public class CategoriaRequest {
     private String nome;
 
     @Positive
-    @IdValido(domainClass = Categoria.class, fieldName = "id")
     private Long categoriaMaeId;
 
     //+1 CDD Categoria
-    public Categoria toModel(EntityManager manager) {
+    public Categoria toModel(EntityManager manager) throws Exception {
         Categoria categoria = new Categoria(nome);
         if (categoriaMaeId != null){
             Categoria categoriaMae = manager.find(Categoria.class, categoriaMaeId);
+            if (categoriaMae == null) { throw new Exception("Id não existe."); }
             categoria.setMae(categoriaMae);
         }
         return new Categoria(nome);

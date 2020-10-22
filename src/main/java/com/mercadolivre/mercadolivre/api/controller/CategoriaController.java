@@ -22,7 +22,7 @@ public class CategoriaController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<Void> ciarCategoria(@RequestBody @Valid CategoriaRequest request) {
+    public ResponseEntity<Void> ciarCategoria(@RequestBody @Valid CategoriaRequest request) throws Exception {
         //+1 CDD Categoria
         Categoria categoria = request.toModel(manager);
         manager.persist(categoria);
