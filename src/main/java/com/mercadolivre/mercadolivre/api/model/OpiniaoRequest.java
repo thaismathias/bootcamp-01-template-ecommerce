@@ -30,6 +30,6 @@ public class OpiniaoRequest {
     }
 
     public Opiniao toModel(EntityManager manager, Produto produto, Usuario dona) {
-        return new Opiniao(nota, titulo, descricao, produto, dona);
+        return new Opiniao(nota, titulo, descricao, dona);
     }
 }

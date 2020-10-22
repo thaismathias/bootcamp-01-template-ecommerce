@@ -1,7 +1,6 @@
 package com.mercadolivre.mercadolivre.model;
 
 import com.mercadolivre.mercadolivre.api.model.CaracteristicaProduto;
-import com.mercadolivre.mercadolivre.api.model.ImagemProduto;
 import com.mercadolivre.mercadolivre.api.model.ListaCaracteristicasRequest;
 
 import javax.persistence.*;
@@ -54,6 +53,9 @@ public class Produto {
     @ElementCollection
     private Set<ImagemProduto> imagens = new HashSet<>();
 
+    @ElementCollection
+    private Set<Opiniao> opiniao;
+
     @Deprecated
     public Produto(){
 
@@ -93,5 +95,9 @@ public class Produto {
 
     public String getNome() {
         return nome;
+    }
+
+    public void associaOpiniao(Opiniao opiniao) {
+        this.opiniao.add(opiniao);
     }
 }

@@ -35,7 +35,8 @@ public class OpiniaoController {
 
         Produto produto = manager.find(Produto.class, produtoId);
         Opiniao opiniao = request.toModel(manager, produto, dona);
-        manager.persist(opiniao);
+        produto.associaOpiniao(opiniao);
+        manager.merge(produto);
         return ResponseEntity.ok().build();
     }
 }
