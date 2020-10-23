@@ -48,6 +48,6 @@ public class PerguntaController {
         produto.associaPergunta(pergunta);
         emailService.enviarEmailPergunta(pergunta, produto);//Simula envio de email
 
-        return ResponseEntity.ok(produto.getPerguntas());
+        return ResponseEntity.ok(produto.getPergunta());
     }
 }

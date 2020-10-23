@@ -108,9 +108,16 @@ public class Produto {
     public BigDecimal getMediaDeNotas(){
         BigDecimal somaNotas = new BigDecimal(opiniao.stream().mapToDouble(Opiniao::getNota).sum());
         BigDecimal numeroNotas = new BigDecimal(getTotalDeNotas());
-        return somaNotas.divide(numeroNotas).setScale(1, RoundingMode.UP);
+        return somaNotas.divide(numeroNotas,1,RoundingMode.UP);
     }
 
+    public boolean verificaEstoque(int quantidade) {
+        return this.quantidade >= quantidade;
+    }
+
+    public void atualizarEstoque(@Positive int quantidade) {
+        this.quantidade -= quantidade;
+    }
 
     public Long getId() {
         return id;
