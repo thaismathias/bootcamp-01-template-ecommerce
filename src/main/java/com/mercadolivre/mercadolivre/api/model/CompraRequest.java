@@ -2,10 +2,8 @@ package com.mercadolivre.mercadolivre.api.model;
 
 import com.mercadolivre.mercadolivre.model.Compra;
 import com.mercadolivre.mercadolivre.model.Produto;
-import com.mercadolivre.mercadolivre.model.StatusCompra;
 import com.mercadolivre.mercadolivre.model.Usuario;
 
-import javax.persistence.EntityManager;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
