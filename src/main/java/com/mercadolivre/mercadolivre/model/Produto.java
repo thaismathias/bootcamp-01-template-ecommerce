@@ -106,9 +106,13 @@ public class Produto {
     }
 
     public BigDecimal getMediaDeNotas(){
-        BigDecimal somaNotas = new BigDecimal(opiniao.stream().mapToDouble(Opiniao::getNota).sum());
-        BigDecimal numeroNotas = new BigDecimal(getTotalDeNotas());
-        return somaNotas.divide(numeroNotas,1,RoundingMode.UP);
+        if (getTotalDeNotas() > 0) {
+            BigDecimal somaNotas = BigDecimal.valueOf(opiniao.stream().mapToDouble(Opiniao::getNota).sum());
+            BigDecimal numeroNotas = new BigDecimal(getTotalDeNotas());
+            return somaNotas.divide(numeroNotas,1,RoundingMode.UP);
+        }
+
+        return BigDecimal.ZERO;
     }
 
     public boolean verificaEstoque(int quantidade) {
@@ -157,5 +161,9 @@ public class Produto {
 
     public Set<Pergunta> getPergunta() {
         return pergunta;
+    }
+
+    public Usuario getDona() {
+        return dona;
     }
 }
