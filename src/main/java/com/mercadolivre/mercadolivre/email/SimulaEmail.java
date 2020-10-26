@@ -12,6 +12,9 @@ public class SimulaEmail extends AbstractEmailService {
     public void enviarEmail(SimpleMailMessage message) {
         LOG.info("Simulando email...");
         LOG.info(message.toString());
+        LOG.info("--------------------------------");
+        LOG.info(message.getText());
+        LOG.info("--------------------------------");
         LOG.info("Email enviado com sucesso.");
     }
 }

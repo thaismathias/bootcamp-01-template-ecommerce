@@ -4,6 +4,8 @@ import com.mercadolivre.mercadolivre.model.Pergunta;
 import com.mercadolivre.mercadolivre.model.Produto;
 import org.springframework.mail.SimpleMailMessage;
 
+import static com.mercadolivre.mercadolivre.helper.Constants.URL;
+
 public abstract class AbstractEmailService implements EmailService {
 
     @Override
@@ -11,13 +13,17 @@ public abstract class AbstractEmailService implements EmailService {
         SimpleMailMessage sm = new SimpleMailMessage();
         sm.setTo(pergunta.getDona().getEmail());
         sm.setFrom("mercadolivre@zup.com");
-        //sm.setSubject("Você tem uma nova pergunta:");
+
+        String conteudoEmail = "\nOlá, " + produto.getDona().getEmail() +
+                "\nVocê tem uma nova pergunta em um de seus produtos" +
+                "\nProduto [" + produto.getId() + "]: " + produto.getNome() +
+                "\nLink: " + URL + "/produtos/" + produto.getId();
 
         sm.setSubject("Nova pergunta sobre o produto: "
                 + produto.getId() + " - "
                 + produto.getNome());
 
-        sm.setText(pergunta.getTitulo());
+        sm.setText(conteudoEmail);
 
         enviarEmail(sm);
     }
