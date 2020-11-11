@@ -1,12 +1,13 @@
 package com.mercadolivre.mercadolivre.api.model;
 
 import com.mercadolivre.mercadolivre.model.Compra;
+import com.mercadolivre.mercadolivre.model.RetornoGatewayPagamento;
 import com.mercadolivre.mercadolivre.model.Transacao;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-public class RetornoPagseguroRequest {
+public class RetornoPagseguroRequest implements RetornoGatewayPagamento {
 
     @NotBlank
     private String transacaoId;

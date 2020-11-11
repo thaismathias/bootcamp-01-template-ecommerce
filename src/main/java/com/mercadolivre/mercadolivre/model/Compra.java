@@ -6,6 +6,7 @@ import com.mercadolivre.mercadolivre.api.model.StatusCompra;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.util.HashSet;
@@ -60,14 +61,24 @@ public class Compra {
         return id;
     }
 
-    public void adicionaTransacao(RetornoPagseguroRequest request) {
+    public void adicionaTransacao(@Valid RetornoGatewayPagamento request) {
         Transacao transacao = request.toTransacao(this);
-        Assert.isTrue(!this.transacoes.contains(transacao), "Transação duplicada. Id da transação: " + transacao.getTransacaoId());//ToDo Retorna 500
-        Set<Transacao> transacaosConcluidasSucesso = this.transacoes.stream()
+        Assert.isTrue(!this.transacoes.contains(transacao), "Transação duplicada. Id da transação: "
+                + transacao.getTransacaoId());//ToDo Retorna 500
+
+        Set<Transacao> transacoesConcluidasSucesso = this.transacoes.stream()
                 .filter(transacao::concluidaComSucesso)
                 .collect(Collectors.toSet()); //Deve estar vazio, não pode ter transação com sucesso
-        Assert.isTrue(transacaosConcluidasSucesso.isEmpty(), "Compra já foi concluída.");
+        Assert.isTrue(transacoesConcluidasSucesso.isEmpty(), "Compra já foi concluída.");
 
-        this.transacoes.add(request.toTransacao(this));
+        this.transacoes.add(transacao);
+    }
+
+    private Set<Transacao> transacoesConcluidasSucesso() {
+        return true;
+    }
+
+    public boolean processadaComSucesso() {
+        return true;
     }
 }
